@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('quantidade');
             $table->double('valor_unitario');
+            $table->foreignId('cadastro_id')->constrained('cadastro')->onDelete('cascade');
             $table->timestamps();
         });
     }

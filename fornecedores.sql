@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/08/2025 às 19:30
+-- Tempo de geração: 19/08/2025 às 20:46
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -75,6 +75,7 @@ CREATE TABLE `estoque` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `quantidade` int(11) NOT NULL,
   `valor_unitario` double NOT NULL,
+  `cadastro_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -227,7 +228,8 @@ ALTER TABLE `cadastro`
 -- Índices de tabela `estoque`
 --
 ALTER TABLE `estoque`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `estoque_cadastro_id_foreign` (`cadastro_id`);
 
 --
 -- Índices de tabela `failed_jobs`
@@ -315,6 +317,16 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `estoque`
+--
+ALTER TABLE `estoque`
+  ADD CONSTRAINT `estoque_cadastro_id_foreign` FOREIGN KEY (`cadastro_id`) REFERENCES `cadastro` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
